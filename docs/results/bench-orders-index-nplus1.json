@@ -1,0 +1,1 @@
+{"label": "GET /orders: index, lazy items (N+1)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 445.7, "mean_ms": 22.04, "p50_ms": 21.37, "p95_ms": 34.13, "p99_ms": 44.55}

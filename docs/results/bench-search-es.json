@@ -1,0 +1,1 @@
+{"label": "search: Elasticsearch (200k products)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 212.4, "mean_ms": 46.3, "p50_ms": 40.66, "p95_ms": 94.48, "p99_ms": 131.33}

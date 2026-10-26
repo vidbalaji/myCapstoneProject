@@ -1,0 +1,1 @@
+{"label": "GET /cart: Redis cache (warm)", "requests": 5000, "concurrency": 10, "errors": 0, "throughput_rps": 2404.8, "mean_ms": 3.9, "p50_ms": 3.55, "p95_ms": 7.32, "p99_ms": 9.84}

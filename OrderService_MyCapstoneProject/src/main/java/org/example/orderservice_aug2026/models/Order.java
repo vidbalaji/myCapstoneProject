@@ -3,6 +3,7 @@ package org.example.orderservice_aug2026.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,14 @@ public class Order extends BaseModel {
     @Embedded
     private Address deliveryAddress;
 
+    // @BatchSize avoids the N+1 problem on the order-history page: the items of up to 50 orders are loaded
+    // with one "WHERE order_id IN (...)" query instead of one query per order
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 50)
     private List<OrderItem> items = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("changedAt ASC")
+    @BatchSize(size = 50)
     private List<OrderStatusHistory> statusHistory = new ArrayList<>();
 }

@@ -1,0 +1,1 @@
+{"label": "search: MySQL LIKE fallback (200k products)", "requests": 300, "concurrency": 10, "errors": 0, "throughput_rps": 5.9, "mean_ms": 1672.1, "p50_ms": 1623.96, "p95_ms": 2404.73, "p99_ms": 2691.66}

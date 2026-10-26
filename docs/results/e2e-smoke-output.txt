@@ -56,7 +56,7 @@
 
 6. Notifications (Kafka -> Notification Service)
   PASS email: 'Welcome'
-  PASS email: 'Order #2 confirmed'
+  PASS email: 'Order #1300000 confirmed'
   PASS email: 'Complete payment'
   PASS email: 'Payment receipt'
   PASS email: 'is now delivered'

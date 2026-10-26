@@ -2,6 +2,7 @@ package org.example.cartservice_aug2026.controllers;
 
 import org.example.cartservice_aug2026.exceptions.CartItemNotFoundException;
 import org.example.cartservice_aug2026.exceptions.ProductNotFoundException;
+import org.example.cartservice_aug2026.exceptions.ProductServiceUnavailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -19,6 +20,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProductServiceUnavailableException.class)
+    public ResponseEntity<String> handleUnavailable(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
