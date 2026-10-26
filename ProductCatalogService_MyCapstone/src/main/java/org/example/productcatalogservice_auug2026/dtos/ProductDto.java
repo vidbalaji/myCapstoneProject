@@ -2,7 +2,6 @@ package org.example.productcatalogservice_auug2026.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.productcatalogservice_auug2026.models.Category;
 
 @Setter
 @Getter

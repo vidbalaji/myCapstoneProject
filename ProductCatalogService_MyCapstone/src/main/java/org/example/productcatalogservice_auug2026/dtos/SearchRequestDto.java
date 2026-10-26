@@ -9,4 +9,6 @@ public class SearchRequestDto {
     private String query;
     private Integer pageSize;
     private Integer pageNumber;
+    // RELEVANCE (default), PRICE_ASC or PRICE_DESC
+    private String sortBy;
 }

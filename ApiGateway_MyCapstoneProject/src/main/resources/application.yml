@@ -1,0 +1,59 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: apigateway
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: apigateway
+      auto-offset-reset: earliest
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  cloud:
+    gateway:
+      default-filters:
+        # Token bucket per client IP, stored in Redis so the limit holds across gateway instances
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: ${RATE_LIMIT_PER_SECOND:20}
+            redis-rate-limiter.burstCapacity: ${RATE_LIMIT_BURST:40}
+            key-resolver: "#{@clientIpKeyResolver}"
+      routes:
+        - id: user-service
+          uri: lb://userservice
+          predicates:
+            - Path=/auth/**,/users/**
+        - id: product-service
+          uri: lb://productservice
+          predicates:
+            - Path=/products/**,/categories/**,/search/**,/search
+        - id: cart-service
+          uri: lb://cartservice
+          predicates:
+            - Path=/cart/**,/cart
+        - id: order-service
+          uri: lb://orderservice
+          predicates:
+            - Path=/orders/**,/orders
+        - id: payment-service
+          uri: lb://paymentservice
+          predicates:
+            - Path=/payment/**,/stripeWebhook
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+gateway:
+  auth:
+    # How long a validated token is trusted without asking User Service again (0 disables the cache)
+    cache-ttl-seconds: ${AUTH_CACHE_TTL_SECONDS:60}

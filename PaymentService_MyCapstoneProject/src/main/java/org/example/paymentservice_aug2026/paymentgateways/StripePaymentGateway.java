@@ -6,22 +6,30 @@ import com.stripe.model.PaymentLink;
 import com.stripe.model.Price;
 import com.stripe.param.PaymentLinkCreateParams;
 import com.stripe.param.PriceCreateParams;
+import org.example.paymentservice_aug2026.models.PaymentGatewayType;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
 public class StripePaymentGateway implements IPaymentGateway {
 
     @Value("${stripe.apiKey}")
     private String apiKey;
 
+    @Value("${app.public-base-url}")
+    private String publicBaseUrl;
+
     @Override
-    public String getPaymentLink(Long amount, String phoneNumber, String name, String email, String orderId) {
+    public PaymentGatewayType getType() {
+        return PaymentGatewayType.STRIPE;
+    }
+
+    @Override
+    public PaymentLinkResult createPaymentLink(Long amount, String currency, String phoneNumber, String name,
+                                               String email, String orderId) {
         try {
             Stripe.apiKey = this.apiKey;
-            Price price = getPrice(amount);
+            Price price = getPrice(amount, currency, orderId);
             PaymentLinkCreateParams params =
                     PaymentLinkCreateParams.builder()
                             .addLineItem(
@@ -29,37 +37,36 @@ public class StripePaymentGateway implements IPaymentGateway {
                                             .setPrice(price.getId())
                                             .setQuantity(1L)
                                             .build()
-                            ).setAfterCompletion(PaymentLinkCreateParams.AfterCompletion.builder()
+                            )
+                            // lets the webhook map a completed checkout back to our order
+                            .putMetadata("orderId", orderId)
+                            .setAfterCompletion(PaymentLinkCreateParams.AfterCompletion.builder()
                                     .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
                                     .setRedirect(PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
-                                            .setUrl("https://scaler.com")
+                                            .setUrl(publicBaseUrl + "/orders/" + orderId)
                                             .build())
                                     .build())
                             .build();
             PaymentLink paymentLink = PaymentLink.create(params);
-            return paymentLink.getUrl();
+            return new PaymentLinkResult(paymentLink.getUrl(), paymentLink.getId());
         }catch (StripeException exception) {
             throw new RuntimeException(exception.getMessage());
         }
     }
 
-    private Price getPrice(Long amount) {
+    // A one-time price for this order (the earlier version created a monthly recurring "Gold Plan" price,
+    // which would have turned every order into a subscription).
+    private Price getPrice(Long amount, String currency, String orderId) {
         try {
             PriceCreateParams params =
                     PriceCreateParams.builder()
-                            .setCurrency("usd")
+                            .setCurrency(currency.toLowerCase())
                             .setUnitAmount(amount)
-                            .setRecurring(
-                                    PriceCreateParams.Recurring.builder()
-                                            .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
-                                            .build()
-                            )
                             .setProductData(
-                                    PriceCreateParams.ProductData.builder().setName("Gold Plan").build()
+                                    PriceCreateParams.ProductData.builder().setName("Order #" + orderId).build()
                             )
                             .build();
-            Price price = Price.create(params);
-            return price;
+            return Price.create(params);
         }catch (StripeException exception) {
             throw new RuntimeException(exception.getMessage());
         }

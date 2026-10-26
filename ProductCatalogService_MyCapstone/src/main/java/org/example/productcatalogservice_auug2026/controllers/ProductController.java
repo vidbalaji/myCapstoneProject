@@ -7,12 +7,9 @@ import org.example.productcatalogservice_auug2026.models.Product;
 import org.example.productcatalogservice_auug2026.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 //@Controller
@@ -21,6 +18,21 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+
+    @GetMapping("/products")
+    public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "0") Integer page,
+                                           @RequestParam(defaultValue = "20") Integer size) {
+        if (page < 0 || size <= 0 || size > 100) {
+            throw new IllegalArgumentException("page must be >= 0 and size between 1 and 100");
+        }
+        return productService.getAllProducts(page, size).map(this::from);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @GetMapping("/products/{productId}/users/{userId}")
     public ProductDto getProductDetailsBasedOnUserRole(@PathVariable Long productId,

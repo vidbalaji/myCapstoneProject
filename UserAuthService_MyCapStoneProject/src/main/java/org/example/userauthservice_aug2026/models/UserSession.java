@@ -1,5 +1,6 @@
 package org.example.userauthservice_aug2026.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Entity
 public class UserSession extends BaseModel {
+    @Column(length = 1024)
     private String token;
 
     @ManyToOne

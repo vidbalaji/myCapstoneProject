@@ -5,6 +5,7 @@ import org.example.productcatalogservice_auug2026.models.Category;
 import org.example.productcatalogservice_auug2026.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +71,22 @@ public class ProductService implements IProductService {
     @Override
     public Product getProductBasedOnUserRole(Long productId, Long userId) {
         return null;
+    }
+
+    // The FakeStore adapter is kept for reference; StorageProductService (@Primary) serves the real catalog.
+    @Override
+    public Page<Product> getAllProducts(Integer pageNumber, Integer pageSize) {
+        throw new UnsupportedOperationException("Not supported by the FakeStore adapter");
+    }
+
+    @Override
+    public Page<Product> getProductsByCategory(Long categoryId, Integer pageNumber, Integer pageSize) {
+        throw new UnsupportedOperationException("Not supported by the FakeStore adapter");
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        throw new UnsupportedOperationException("Not supported by the FakeStore adapter");
     }
 
 

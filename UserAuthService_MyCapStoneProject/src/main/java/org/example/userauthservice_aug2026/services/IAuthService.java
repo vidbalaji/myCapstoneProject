@@ -9,4 +9,12 @@ public interface IAuthService {
     Pair<User,String> login(String email, String password);
 
     Boolean validateToken(String token);
+
+    User getUserForToken(String token);
+
+    void logout(String token);
+
+    void requestPasswordReset(String email);
+
+    void resetPassword(String token, String newPassword);
 }

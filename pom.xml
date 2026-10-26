@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Aggregator only: lets "mvn package" build every service in one go. Each service keeps its own parent. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>myCapstoneProject</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>myCapstoneProject - E-commerce microservices</name>
+
+    <modules>
+        <module>ServiceDiscovery_MyCapstoneproject</module>
+        <module>ApiGateway_MyCapstoneProject</module>
+        <module>UserAuthService_MyCapStoneProject</module>
+        <module>ProductCatalogService_MyCapstone</module>
+        <module>CartService_MyCapstoneProject</module>
+        <module>OrderService_MyCapstoneProject</module>
+        <module>PaymentService_MyCapstoneProject</module>
+        <module>NotificationService_MyCapStoneProject</module>
+    </modules>
+</project>

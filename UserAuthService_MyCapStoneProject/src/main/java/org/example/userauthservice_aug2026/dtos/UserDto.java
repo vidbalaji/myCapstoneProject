@@ -1,11 +1,8 @@
 package org.example.userauthservice_aug2026.dtos;
 
-import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.userauthservice_aug2026.models.Role;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -16,6 +13,8 @@ public class UserDto {
     private String name;
 
     private String email;
+
+    private String phoneNumber;
 
     private List<String> roles;
 }
