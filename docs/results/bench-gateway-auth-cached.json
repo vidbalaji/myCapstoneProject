@@ -1,0 +1,1 @@
+{"label": "GET /cart via gateway: token validation cached in Redis", "requests": 4000, "concurrency": 10, "errors": 0, "throughput_rps": 839.4, "mean_ms": 11.69, "p50_ms": 11.06, "p95_ms": 18.61, "p99_ms": 30.1}

@@ -1,0 +1,1 @@
+{"label": "GET /cart: MongoDB only (no cache)", "requests": 5000, "concurrency": 10, "errors": 0, "throughput_rps": 1752.1, "mean_ms": 5.56, "p50_ms": 5.15, "p95_ms": 10.05, "p99_ms": 13.94}

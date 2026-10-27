@@ -1,0 +1,1 @@
+{"query":"SELECT ... FROM orders WHERE user_id=? ORDER BY created_at DESC LIMIT 10","rows":300002,"without_index":"type=ALL rows=297505 Extra=Using where; Using filesort","with_index":"idx_orders_user_created(user_id, created_at)","selects_per_request_nplus1":12,"selects_per_request_batchsize":3}

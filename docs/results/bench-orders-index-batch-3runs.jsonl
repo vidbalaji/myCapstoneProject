@@ -1,0 +1,3 @@
+{"label": "GET /orders: index + @BatchSize (N+1 fixed)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 668.6, "mean_ms": 14.22, "p50_ms": 13.86, "p95_ms": 23.72, "p99_ms": 30.4}
+{"label": "GET /orders: index + @BatchSize (N+1 fixed)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 684.2, "mean_ms": 14.18, "p50_ms": 13.5, "p95_ms": 24.63, "p99_ms": 33.92}
+{"label": "GET /orders: index + @BatchSize (N+1 fixed)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 656.9, "mean_ms": 14.75, "p50_ms": 13.96, "p95_ms": 25.99, "p99_ms": 32.82}

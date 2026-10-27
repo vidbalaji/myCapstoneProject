@@ -1,0 +1,3 @@
+{"label": "GET /orders: index, lazy items (N+1)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 330.1, "mean_ms": 29.23, "p50_ms": 27.43, "p95_ms": 51.68, "p99_ms": 74.95}
+{"label": "GET /orders: index, lazy items (N+1)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 445.7, "mean_ms": 22.04, "p50_ms": 21.37, "p95_ms": 34.13, "p99_ms": 44.55}
+{"label": "GET /orders: index, lazy items (N+1)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 453.8, "mean_ms": 21.26, "p50_ms": 19.61, "p95_ms": 38.31, "p99_ms": 54.7}

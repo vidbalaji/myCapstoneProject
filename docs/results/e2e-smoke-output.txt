@@ -1,0 +1,74 @@
+
+1. User management (PRD 1.x, 6.x)
+  PASS admin account available (409)
+  PASS customer signup (201)
+  PASS duplicate email rejected (409)
+  PASS admin login returns token
+  PASS wrong password rejected (401)
+  PASS customer login returns token
+  PASS view own profile (200)
+  PASS update profile (200)
+  PASS profile name updated
+
+2. Gateway security
+  PASS no token -> 401 (401)
+  PASS bad token -> 401 (401)
+  PASS spoofed X-User-Id without token -> 401 (401)
+  PASS customer cannot create products (403)
+  PASS customer cannot read other users (403)
+
+3. Product catalog (PRD 2.x)
+  PASS admin creates category (201)
+  PASS admin creates product 1 (201)
+  PASS admin creates product 2 (201)
+  PASS product details are public (200)
+  PASS browse by category (200)
+  PASS category has 2 products
+  PASS keyword search finds new product (Elasticsearch)
+  PASS typo 'zenbok' still finds ZenBook (fuzzy search)
+
+4. Cart (PRD 3.1, 3.2)
+  PASS add product 1 to cart (200)
+  PASS add product 2 to cart (200)
+  PASS unknown product rejected (404)
+  PASS review cart (200)
+  PASS cart total = 74999 + 2 x 89999
+
+5. Checkout, payment and order management (PRD 3.3, 4.x, 5.x)
+  PASS checkout places order (201)
+  PASS order is PAYMENT_PENDING
+  PASS cart emptied after checkout
+  PASS payment link arrives via Kafka (order -> payment -> order)
+  PASS no receipt before payment (409)
+  PASS customer pays (mock gateway) (200)
+  PASS order becomes PAID via payment-events
+  PASS payment receipt (200)
+  PASS receipt amount in paise
+  PASS order history (200)
+  PASS latest order first
+  PASS customer cannot change status (403)
+  PASS cannot skip to DELIVERED (409)
+  PASS admin moves order to SHIPPED (200)
+  PASS admin moves order to OUT_FOR_DELIVERY (200)
+  PASS admin moves order to DELIVERED (200)
+  PASS order tracking (200)
+  PASS tracking shows full history
+
+6. Notifications (Kafka -> Notification Service)
+  PASS email: 'Welcome'
+  PASS email: 'Order #1300000 confirmed'
+  PASS email: 'Complete payment'
+  PASS email: 'Payment receipt'
+  PASS email: 'is now delivered'
+
+7. Password reset and logout (PRD 1.4, 6.2)
+  PASS request reset link (202)
+  PASS reset email sent
+  PASS reset password (200)
+  PASS old session revoked after reset (gateway cache evicted via Kafka)
+  PASS login with new password
+  PASS new token works (200)
+  PASS logout (204)
+  PASS token rejected after logout
+
+All 58 checks passed.

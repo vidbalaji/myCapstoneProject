@@ -1,0 +1,1 @@
+{"label": "GET /orders: index + @BatchSize (N+1 fixed)", "requests": 2000, "concurrency": 10, "errors": 0, "throughput_rps": 668.6, "mean_ms": 14.22, "p50_ms": 13.86, "p95_ms": 23.72, "p99_ms": 30.4}
